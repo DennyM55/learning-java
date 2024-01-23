@@ -1,0 +1,4 @@
+points for g4g
+1.child thread inherits property of parent thread
+2.priority of thread are from 1 to 10, 1 being lowest , 5 being normal and 10 being highest.0 is not a priority and it does not exist.
+
