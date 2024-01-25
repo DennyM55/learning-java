@@ -1,0 +1,30 @@
+What can be expected when the following code gets executed?
+
+```java
+public class MyThreadDemo extends Thread {
+    @Override
+    public void run(){
+        System.out.println("Thread is running");
+    }
+
+    public static void main(String[] args) {
+        MyThreadDemo obj= new MyThreadDemo();
+        obj.setPriority(15);
+        obj.start();
+    }
+}
+```
+
+Options:
+- Compile Time Error
+- Compile Time Error
+- Runtime Exception ✔️
+- Prints “Thread is running”
+
+Explanation:
+Yes you are right
+
+---
+
+Explanation:
+The code is attempting to create a thread by extending the `Thread` class and overriding its `run()` method. It then tries to set the priority of the thread to 15 and start the thread. The valid range of thread priorities is from `Thread.MIN_PRIORITY` (which is 1) to `Thread.MAX_PRIORITY` (which is 10) in Java. Therefore, attempting to set the priority of a thread to 15 will throw an `IllegalArgumentException` at runtime because it is outside the valid range. Hence, the correct answer is "Runtime Exception", which is also indicated as correct in the image.

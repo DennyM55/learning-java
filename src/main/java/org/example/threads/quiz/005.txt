@@ -1,0 +1,22 @@
+Given:
+thread1 (instance of runnable) and obj (instance of Object class) are public references available to many other threads. thread1 is currently executing wait().
+
+From another thread, which statement is the most reliable way to ensure that thread1 will stop executing wait()?
+
+Options:
+- thread1.notify();
+- obj.notify();
+- thread1.notifyAll();
+- obj.notifyAll(); ✔️
+
+Explanation:
+Yes, you are right! The notifyAll() method will alert all the threads which are currently executing the wait().
+
+---
+
+Explanation:
+In Java, the `wait()` and `notify()`/`notifyAll()` methods are used for inter-thread communication. These methods must be called from a synchronized context. When a thread calls `wait()`, it does so on an object's monitor, which means it waits for another thread to call `notify()` or `notifyAll()` on the same object to be able to proceed.
+
+In this case, since `thread1` is an instance of `Runnable` and not an object monitor, calling `notify()` or `notifyAll()` on it would not make sense (and would result in a compile-time error since `Runnable` does not have `notify()` or `notifyAll()` methods).
+
+The correct way to wake up all threads waiting on `obj`'s monitor is to call `obj.notifyAll()`. This will notify all threads waiting on `obj` that they may proceed. The tick indicates that the correct answer "obj.notifyAll()" has been selected, and the explanation confirms that this action will alert all the threads currently executing the `wait()` on the same object monitor.

@@ -1,0 +1,11 @@
+The statement that "Each thread must be contained in a separate executable (exe)" is not true for threads. Threads are typically contained within a single executable and can share the same process space. Here's the rationale for each statement:
+
+1. "Each thread must be contained in a separate executable (exe)." - This is false. Threads are designed to run within the same process and do not need to be in separate executables. Multiple threads can be created within a single program and can execute concurrently.
+
+2. "Threads share heap area, files, and memory." - This is true. In a multithreaded process, threads share the process's resources such as the heap, open files, and other memory resources.
+
+3. "Every thread has a separate program counter, local variables, and stack area." - This is true. Each thread maintains its own program counter, stack, and local variables, which are separate from other threads to enable concurrent execution without interference.
+
+4. "Threads allow for multiple activities within a process." - This is true. The main advantage of threads is that they allow multiple activities to be carried out simultaneously within the same process.
+
+Therefore, the first statement is the correct answer as it is not true for threads.

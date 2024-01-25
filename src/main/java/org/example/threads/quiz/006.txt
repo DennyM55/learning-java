@@ -1,0 +1,35 @@
+The image contains a multiple-choice question regarding the behavior of a Java thread in a given code snippet. Here is the text extracted from the image:
+
+---
+
+Q6 of 7
+What can be expected when the following code gets executed?
+
+```java
+public class MyThreadDemo extends Thread {
+    public void run() {
+        System.out.println("Thread is running");
+    }
+}
+
+public static void main(String[] args) {
+    MyThreadDemo obj = new MyThreadDemo();
+    obj.setPriority(7); // 1
+    obj.start(); // 2
+    obj.setDaemon(true); // 3
+}
+```
+
+Options:
+- Prints “Thread is running” and program gets into infinite loop as it’s a daemon thread
+- Prints “Thread is running” and finishes execution
+- Compilation Error
+- Prints “Thread is running” and throws Runtime Exception. ✔️
+
+Explanation:
+Yes, you are right! The `setDaemon(true)` method will alert all the threads which are currently executing the `wait()`.
+
+---
+
+Explanation:
+The code snippet is trying to set a thread as a daemon thread after it has been started. In Java, you can only set a thread as a daemon before it has been started. If you attempt to set a thread as a daemon after it has been started, it will throw an `IllegalThreadStateException` at runtime. Hence, the correct answer is "Prints “Thread is running” and throws Runtime Exception", which is also indicated as correct in the image. The explanation provided in the image is not accurate for this context, as `setDaemon(true)` does not relate to threads waiting, but rather to the thread's daemon status.
