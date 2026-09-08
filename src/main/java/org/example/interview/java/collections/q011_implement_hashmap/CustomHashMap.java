@@ -27,8 +27,7 @@ public class CustomHashMap<K, V> {
 
     private int getBucketIndex(K key) {
         int hash = Objects.hashCode(key);
-
-        return (hash & 0x7fffffff) % buckets.length;
+        return Math.abs(hash) % buckets.length;
     }
 
     public void put(K key, V value) {
