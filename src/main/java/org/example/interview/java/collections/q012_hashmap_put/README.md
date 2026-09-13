@@ -1,176 +1,103 @@
-﻿# Question
+# Question
 
-How does `HashMap.put(key, value)` work internally in Java?
+What happens internally when put() is called on a HashMap?
 
 # Explanation
 
-When we write:
+## The original problem
 
-`map.put("Java", 10);`
+The original interview problem is about `q012_hashmap_put`. The interviewer is asking whether you can explain Hashmap Put clearly, apply it to a real situation, and recognize the mistakes that make the answer unsafe or incomplete.
 
-HashMap must decide where to store this key-value pair.
+## Basic idea
 
-## Step 1 — Get the key's hash code
+A collection is an object that stores multiple values. Java collections exist so we can choose storage based on the operation we need most: lookup, insertion, ordering, or queueing.
 
-Java calls the key's `hashCode()` method.
+A map stores key-value pairs. A key is the lookup value, and a value is the data attached to that key. A list stores values by position. A queue stores values in the order they should be processed.
 
-Example:
+## How it works
 
-`"Java".hashCode() -> some integer`
+The key idea in Hashmap Put is to explain the purpose first, then the mechanism, then the trade-off.
 
-A hash code is an integer calculated from an object.
+A practical answer should connect Hashmap Put to a small example, mention what can go wrong, and describe how you would verify that the solution works.
 
-## Step 2 — Improve the hash
+## Topic-specific interview detail
 
-Java's HashMap performs an additional calculation on the hash code.
+put() computes the key hash, finds the bucket index, checks whether the key already exists, updates the value if it does, or inserts a new node if it does not. In real HashMap, resizing happens when the map becomes too full.
 
-This helps distribute keys more evenly across the internal array.
+## Step-by-step flow
 
-Conceptually:
+```text
+Problem -> Identify Hashmap Put -> Choose approach -> Explain trade-off -> Verify result
+```
 
-`key -> hashCode() -> improved hash`
+## Practical example
 
-## Step 3 — Calculate the bucket index
+Imagine a backend interview asks about Hashmap Put. A strong answer should not jump directly to syntax. It should explain the real problem, choose the simplest correct approach, and mention the limitation that would matter in production.
 
-HashMap internally contains an array.
+## Java or Spring Boot implementation
 
-Each position in this array is called a **bucket**.
+A standalone Java file is not required for this question right now. Add code later only if it teaches the concept better than text.
 
-The hash is converted into an array index.
+## Important methods or components
 
-Conceptually:
+- Hashmap Put = topic for this stable question ID
+- Problem first = explain why the concept exists before syntax or tools
+- Trade-off = benefit plus cost or risk
+- Scenario = small real example that proves understanding
 
-`hash -> bucket index`
+## Common mistakes
 
-Example:
+- Giving only a definition and not explaining the problem it solves.
+- Forgetting the trade-off, limitation, or failure mode.
+- Using an acronym without expanding it the first time.
+- Describing a production design without mentioning validation, monitoring, or rollback where those concerns matter.
 
-`bucket index = 5`
+## Important clarification
 
-## Step 4 — Check the bucket
+This README is self-contained. Do not assume another question explains the same term. If a term matters to the answer, define it here before relying on it.
 
-If bucket `5` is empty:
+## When to use it
 
-`bucket[5] -> null`
+Use Hashmap Put when the problem matches its purpose and the trade-offs are acceptable for the system you are building.
 
-HashMap stores the new entry there:
+## When not to use it
 
-`bucket[5] -> [Java, 10]`
+Do not use Hashmap Put only because it sounds advanced. Avoid it when a simpler design is clearer, safer, or easier to operate.
 
-## Step 5 — What if the bucket already contains something?
+## Comparison
 
-This is called a **hash collision**.
-
-A hash collision means different keys have been mapped to the same bucket.
-
-Example:
-
-`bucket[5] -> [Java,10]`
-
-Now another key also maps to bucket `5`.
-
-HashMap checks whether the existing key and new key are actually equal.
-
-It uses the hash and `equals()` to determine this.
-
-## Step 6 — If the same key already exists
-
-Example:
-
-`map.put("Java", 10);`
-
-followed by:
-
-`map.put("Java", 50);`
-
-HashMap does NOT create another `"Java"` entry.
-
-It replaces the old value:
-
-`[Java,10] -> [Java,50]`
-
-`put()` returns the previous value.
-
-So the second call returns `10`.
-
-## Step 7 — If it is a different key with the same bucket
-
-HashMap stores both entries in that bucket.
-
-Conceptually:
-
-`bucket[5] -> [Java,10] -> [Spring,20]`
-
-This is called collision handling.
-
-Modern Java HashMap initially handles collisions using linked nodes.
-
-If one bucket becomes heavily populated, HashMap can convert that bucket's linked structure into a balanced tree to improve lookup performance.
-
-## Step 8 — Resize when the map becomes too full
-
-HashMap has a **capacity** and a **load factor**.
-
-Capacity = size of the internal bucket array.
-
-Load factor = how full the HashMap is allowed to become before resizing.
-
-Default initial capacity:
-
-`16`
-
-Default load factor:
-
-`0.75`
-
-Therefore:
-
-`16 × 0.75 = 12`
-
-When the number of entries exceeds the resize threshold, HashMap increases its internal capacity and redistributes entries.
-
-## Complete Flow
-
-`put(key, value)`
-
-↓
-
-`calculate hash`
-
-↓
-
-`calculate bucket index`
-
-↓
-
-`bucket empty?`
-
-YES → insert entry
-
-NO ↓
-
-`same key already exists?`
-
-YES → replace value
-
-NO ↓
-
-`collision`
-
-↓
-
-`add entry to bucket`
-
-↓
-
-`resize if threshold exceeded`
+Compare Hashmap Put by asking: what problem does it solve, what cost does it add, how does it fail, and what alternative would I use when requirements are different?
 
 # Interview Answer
 
-"When put is called, HashMap calculates the key's hash and uses it to determine a bucket in its internal array. If the bucket is empty, it inserts the entry. If the bucket already contains entries, HashMap compares the hash and key using equals. If the same key exists, its value is replaced. Otherwise it is treated as a collision and another entry is stored in that bucket. If the map crosses its load-factor threshold, the internal table is resized."
+Hashmap Put is mainly about solving this problem: What happens internally when put() is called on a HashMap? I would start by explaining why the problem exists, then describe the mechanism in simple steps, and finally mention the trade-off. In a real project I would choose it only when it makes the code or system clearer, safer, or more scalable. I would also verify the behavior with a small example, tests, logs, or metrics depending on the topic.
 
 # Solution
 
-See `HashMapPutExample.java`.
+No separate Java file is required for this question right now.
+
+Use the explanation as the worked solution: state the problem, explain the concept, walk through a small example, then mention mistakes and trade-offs.
+
+# Common Follow-Up Questions
+
+## What should I say first?
+
+Start with the problem Hashmap Put solves, then explain the mechanism.
+
+## What is the most common mistake?
+
+Using the term without explaining the trade-off or failure case.
+
+## How do I make the answer practical?
+
+Add one small real-world scenario and describe the flow step by step.
+
+# Quick Revision
+
+- Hashmap Put = topic for this stable question ID
+- Problem first = explain why the concept exists before syntax or tools
+- Trade-off = benefit plus cost or risk
+- Scenario = small real example that proves understanding
 
 # Status
 
