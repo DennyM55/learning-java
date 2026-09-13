@@ -1,32 +1,29 @@
 package org.example.interview.dsa.strings.q002_first_non_repeating_character;
-
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public class FirstNonRepeatingCharacter {
 
-    public static void main(String[] args) {
-        String input = "xpsswiss";
+    public static Optional<Character> findFirstUnique(String text) {
+        Map<Character, Integer> counts = new HashMap<>();
 
-        Character result = findFirstNonRepeating(input);
-
-        System.out.println(result);
-    }
-
-    private static Character findFirstNonRepeating(String input) {
-
-        Map<Character, Integer> frequency = new HashMap<>();
-
-        for (char ch : input.toCharArray()) {
-            frequency.put(ch, frequency.getOrDefault(ch, 0) + 1);
+        for (char character : text.toCharArray()) {
+            // Use zero when absent, then add one occurrence.
+            counts.put(character, counts.getOrDefault(character, 0) + 1);
         }
 
-        for (char ch : input.toCharArray()) {
-            if (frequency.get(ch) == 1) {
-                return ch;
+        for (char character : text.toCharArray()) {
+            // Reading the original string preserves the required order.
+            if (counts.get(character) == 1) {
+                return Optional.of(character);
             }
         }
 
-        return null;
+        return Optional.empty(); // No unique character exists.
+    }
+
+    public static void main(String[] args) {
+        System.out.println(findFirstUnique("swiss").orElse(null)); // w
     }
 }
