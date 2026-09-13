@@ -1,105 +1,105 @@
-﻿# Question
+# Question
 
-How would you implement a simple HashMap in Java?
+How would you implement a simple HashMap?
 
 # Explanation
 
-A HashMap stores data as:
+## The original problem
 
-`key -> value`
+The original interview problem is about `q011_implement_hashmap`. The interviewer is asking whether you can explain Implement Hashmap clearly, apply it to a real situation, and recognize the mistakes that make the answer unsafe or incomplete.
 
-Example:
+## Basic idea
 
-`"Java" -> 10`
+A collection is an object that stores multiple values. Java collections exist so we can choose storage based on the operation we need most: lookup, insertion, ordering, or queueing.
 
-Internally, we can use an array.
+A map stores key-value pairs. A key is the lookup value, and a value is the data attached to that key. A list stores values by position. A queue stores values in the order they should be processed.
 
-Each position in that array is called a **bucket**.
+## How it works
 
-## Step 1 — Convert the key into an array position
+The key idea in Implement Hashmap is to explain the purpose first, then the mechanism, then the trade-off.
 
-Java provides:
+A practical answer should connect Implement Hashmap to a small example, mention what can go wrong, and describe how you would verify that the solution works.
 
-`key.hashCode()`
+## Topic-specific interview detail
 
-A hash code is an integer generated from an object.
+A basic HashMap uses an array of buckets. A bucket is one storage slot. A hash code chooses the bucket. If multiple keys land in the same bucket, they form a chain or tree. The example in this repo uses a simple linked chain.
 
-We convert that integer into a valid array index:
+## Step-by-step flow
 
-`index = (hashCode & 0x7fffffff) % arrayLength`
+```text
+Problem -> Identify Implement Hashmap -> Choose approach -> Explain trade-off -> Verify result
+```
 
-Example:
+## Practical example
 
-Array size = `16`
+Imagine a backend interview asks about Implement Hashmap. A strong answer should not jump directly to syntax. It should explain the real problem, choose the simplest correct approach, and mention the limitation that would matter in production.
 
-Hash code = `35`
+## Java or Spring Boot implementation
 
-`35 % 16 = 3`
+This folder has a runnable Java example: `CustomHashMap.java`. The package is `org.example.interview.java.collections.q011_implement_hashmap` so it belongs to this question folder.
 
-So the entry goes into bucket `3`.
+## Important methods or components
 
-## Step 2 — Store the key and value
+- Implement Hashmap = topic for this stable question ID
+- Problem first = explain why the concept exists before syntax or tools
+- Trade-off = benefit plus cost or risk
+- Scenario = small real example that proves understanding
 
-Each bucket can contain a node:
+## Common mistakes
 
-`Node(key, value)`
+- Giving only a definition and not explaining the problem it solves.
+- Forgetting the trade-off, limitation, or failure mode.
+- Using an acronym without expanding it the first time.
+- Describing a production design without mentioning validation, monitoring, or rollback where those concerns matter.
 
-Example:
+## Important clarification
 
-Bucket 3:
+This README is self-contained. Do not assume another question explains the same term. If a term matters to the answer, define it here before relying on it.
 
-`["Java", 10]`
+## When to use it
 
-## Step 3 — Handle a collision
+Use Implement Hashmap when the problem matches its purpose and the trade-offs are acceptable for the system you are building.
 
-A **collision** means two different keys produce the same bucket index.
+## When not to use it
 
-Example:
+Do not use Implement Hashmap only because it sounds advanced. Avoid it when a simpler design is clearer, safer, or easier to operate.
 
-`"Java" -> bucket 3`
+## Comparison
 
-`"Spring" -> bucket 3`
-
-We cannot overwrite the first entry.
-
-For this simple implementation, each bucket therefore contains a linked list:
-
-`bucket 3 -> [Java,10] -> [Spring,20] -> null`
-
-## put(key, value)
-
-When inserting:
-
-1. Calculate the bucket index.
-2. Check the nodes already in that bucket.
-3. If the key already exists, update its value.
-4. Otherwise add a new node.
-
-## get(key)
-
-When reading:
-
-1. Calculate the same bucket index.
-2. Search the nodes in that bucket.
-3. Compare keys using `equals()`.
-4. Return the matching value.
-5. Return `null` if the key does not exist.
-
-## Why both hashCode() and equals()?
-
-`hashCode()` helps us find the bucket.
-
-`equals()` confirms that we found the correct key.
-
-Two different keys can have the same hash code, so checking only the hash code is not enough.
+Compare Implement Hashmap by asking: what problem does it solve, what cost does it add, how does it fail, and what alternative would I use when requirements are different?
 
 # Interview Answer
 
-"I would implement a HashMap using an array of buckets. I use the key's hashCode to calculate the bucket index. Each bucket can contain multiple nodes to handle hash collisions. For put, I find the bucket, update the value if the key already exists, otherwise insert a new node. For get, I calculate the same bucket and compare keys using equals until I find the required key."
+Implement Hashmap is mainly about solving this problem: How would you implement a simple HashMap? I would start by explaining why the problem exists, then describe the mechanism in simple steps, and finally mention the trade-off. In a real project I would choose it only when it makes the code or system clearer, safer, or more scalable. I would also verify the behavior with a small example, tests, logs, or metrics depending on the topic.
 
 # Solution
 
-See `CustomHashMap.java`.
+Reference source file: `CustomHashMap.java`.
+
+Read the code from `main()` first, then follow each helper method in the order it is called. The expected output demonstrates the concept rather than a production-ready framework.
+
+If execution order can vary because multiple threads run independently, treat the output order as illustrative unless this README states otherwise.
+
+# Common Follow-Up Questions
+
+## What should I say first?
+
+Start with the problem Implement Hashmap solves, then explain the mechanism.
+
+## What is the most common mistake?
+
+Using the term without explaining the trade-off or failure case.
+
+## How do I make the answer practical?
+
+Add one small real-world scenario and describe the flow step by step.
+
+# Quick Revision
+
+- Implement Hashmap = topic for this stable question ID
+- Problem first = explain why the concept exists before syntax or tools
+- Trade-off = benefit plus cost or risk
+- Scenario = small real example that proves understanding
 
 # Status
 

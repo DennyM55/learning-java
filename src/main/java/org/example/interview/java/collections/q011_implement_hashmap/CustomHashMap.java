@@ -32,7 +32,7 @@ public class CustomHashMap<K, V> {
     // Convert a key into its bucket number: "Java" -> hash -> bucket 0-15.
     private int getBucketIndex(K key) {
         int hash = Objects.hashCode(key);
-        return Math.abs(hash) % buckets.length;
+        return Math.floorMod(hash, buckets.length);
     }
 
     public void put(K key, V value) {
