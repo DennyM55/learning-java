@@ -7,13 +7,13 @@ public class ConditionalStringConcatenation {
 
     public static void main(String[] args) {
 
-        List<String> values = List.of("cat", "java", "dog", "code", "spring");
+        List<String> words = List.of("cat", "java", "go", "spring");
 
-        String result = values.stream()
-                .filter(value -> value.length() % 2 == 0)
+        String result = words.stream()
+                .filter(word -> word.length() % 2 == 0)
                 .limit(2)
                 .collect(Collectors.joining());
 
-        System.out.println(result);
+        System.out.println(result); // javago
     }
 }
