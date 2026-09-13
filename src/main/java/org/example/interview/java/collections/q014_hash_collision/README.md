@@ -1,106 +1,105 @@
-﻿# Question
+# Question
 
-What is a hash collision in HashMap, and how does HashMap handle it?
+What is a hash collision, and how does HashMap handle it?
 
 # Explanation
 
-A hash collision happens when two different keys are placed into the same bucket.
+## The original problem
 
-Example:
+The original interview problem is about `q014_hash_collision`. The interviewer is asking whether you can explain Hash Collision clearly, apply it to a real situation, and recognize the mistakes that make the answer unsafe or incomplete.
 
-`KeyA -> bucket 5`
+## Basic idea
 
-`KeyB -> bucket 5`
+A collection is an object that stores multiple values. Java collections exist so we can choose storage based on the operation we need most: lookup, insertion, ordering, or queueing.
 
-Even though the keys are different, both are mapped to the same bucket.
+A map stores key-value pairs. A key is the lookup value, and a value is the data attached to that key. A list stores values by position. A queue stores values in the order they should be processed.
 
-## Why can this happen?
+## How it works
 
-HashMap has a limited number of buckets.
+The key idea in Hash Collision is to explain the purpose first, then the mechanism, then the trade-off.
 
-But there can be many possible keys.
+A practical answer should connect Hash Collision to a small example, mention what can go wrong, and describe how you would verify that the solution works.
 
-Therefore, different keys can sometimes produce the same bucket index.
+## Topic-specific interview detail
 
-## What happens during put()?
+A hash collision happens when two different keys land in the same bucket. HashMap handles this by storing multiple entries in that bucket and comparing keys with equals to find the correct one.
 
-Suppose:
+## Step-by-step flow
 
-`KeyA -> bucket 5`
+```text
+Problem -> Identify Hash Collision -> Choose approach -> Explain trade-off -> Verify result
+```
 
-and bucket 5 already contains:
+## Practical example
 
-`[KeyA, 10]`
+Imagine a backend interview asks about Hash Collision. A strong answer should not jump directly to syntax. It should explain the real problem, choose the simplest correct approach, and mention the limitation that would matter in production.
 
-Now we insert:
+## Java or Spring Boot implementation
 
-`KeyB -> 20`
+This folder has a runnable Java example: `HashCollisionExample.java`. The package is `org.example.interview.java.collections.q014_hash_collision` so it belongs to this question folder.
 
-and KeyB also maps to bucket 5.
+## Important methods or components
 
-HashMap checks whether KeyB is actually equal to KeyA.
+- Hash Collision = topic for this stable question ID
+- Problem first = explain why the concept exists before syntax or tools
+- Trade-off = benefit plus cost or risk
+- Scenario = small real example that proves understanding
 
-If:
+## Common mistakes
 
-`KeyA.equals(KeyB) == false`
+- Giving only a definition and not explaining the problem it solves.
+- Forgetting the trade-off, limitation, or failure mode.
+- Using an acronym without expanding it the first time.
+- Describing a production design without mentioning validation, monitoring, or rollback where those concerns matter.
 
-then HashMap knows they are different keys.
+## Important clarification
 
-Both entries are kept in the same bucket.
+This README is self-contained. Do not assume another question explains the same term. If a term matters to the answer, define it here before relying on it.
 
-Conceptually:
+## When to use it
 
-`bucket 5 -> [KeyA,10] -> [KeyB,20]`
+Use Hash Collision when the problem matches its purpose and the trade-offs are acceptable for the system you are building.
 
-## What happens during get()?
+## When not to use it
 
-When we call:
+Do not use Hash Collision only because it sounds advanced. Avoid it when a simpler design is clearer, safer, or easier to operate.
 
-`map.get(KeyB)`
+## Comparison
 
-HashMap calculates KeyB's hash and reaches bucket 5.
-
-It then checks the entries in that bucket.
-
-It compares the requested key with each stored key using `equals()`.
-
-When it finds KeyB, it returns its value.
-
-## Why is equals() important?
-
-The hash tells HashMap which bucket to search.
-
-`equals()` tells HashMap which exact key inside that bucket is the correct one.
-
-Therefore:
-
-`hashCode()` -> finds the bucket
-
-`equals()` -> finds the exact key
-
-## What if many keys collide?
-
-Initially, entries inside one bucket are stored using linked nodes.
-
-If one bucket becomes heavily populated, modern Java HashMap can convert that bucket into a balanced tree.
-
-This improves lookup performance when many keys are stored in the same bucket.
-
-## Important Rule
-
-If two objects are equal according to `equals()`, they must return the same `hashCode()`.
-
-But two different objects are allowed to return the same hash code.
-
-That is why collisions are possible.
+Compare Hash Collision by asking: what problem does it solve, what cost does it add, how does it fail, and what alternative would I use when requirements are different?
 
 # Interview Answer
 
-"A hash collision occurs when different keys map to the same bucket. HashMap does not overwrite them immediately. It checks whether the keys are equal using equals. If they are different, both entries are stored in the same bucket. During lookup, HashMap first finds the bucket using the hash and then uses equals to find the exact key. If a bucket becomes heavily populated, modern HashMap can convert its linked structure into a balanced tree."
+Hash Collision is mainly about solving this problem: What is a hash collision, and how does HashMap handle it? I would start by explaining why the problem exists, then describe the mechanism in simple steps, and finally mention the trade-off. In a real project I would choose it only when it makes the code or system clearer, safer, or more scalable. I would also verify the behavior with a small example, tests, logs, or metrics depending on the topic.
 
 # Solution
 
-See `HashCollisionExample.java`.
+Reference source file: `HashCollisionExample.java`.
+
+Read the code from `main()` first, then follow each helper method in the order it is called. The expected output demonstrates the concept rather than a production-ready framework.
+
+If execution order can vary because multiple threads run independently, treat the output order as illustrative unless this README states otherwise.
+
+# Common Follow-Up Questions
+
+## What should I say first?
+
+Start with the problem Hash Collision solves, then explain the mechanism.
+
+## What is the most common mistake?
+
+Using the term without explaining the trade-off or failure case.
+
+## How do I make the answer practical?
+
+Add one small real-world scenario and describe the flow step by step.
+
+# Quick Revision
+
+- Hash Collision = topic for this stable question ID
+- Problem first = explain why the concept exists before syntax or tools
+- Trade-off = benefit plus cost or risk
+- Scenario = small real example that proves understanding
 
 # Status
 
